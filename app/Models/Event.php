@@ -13,6 +13,14 @@ class Event extends Model
     use Uuids,SoftDeletes,HasFactory;
     protected $fillable = ['name','start_at','end_at'];
 
+    public function getStartAtAttribute() {
+        return date('Y-m-d', strtotime($this->attributes['start_at']));
+    }    
+    
+    public function getEndAtAttribute() {
+        return date('Y-m-d', strtotime($this->attributes['start_at']));
+    }
+
     public function setNameAttribute($value)
     {
         $this->attributes['name'] = $value;
