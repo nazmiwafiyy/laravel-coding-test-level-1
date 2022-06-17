@@ -5,7 +5,10 @@ namespace App\Http\Controllers\Web;
 use App\Models\Event;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
+use App\Notifications\EventNotification;
+use Illuminate\Support\Facades\Notification;
 
 class EventController extends Controller
 {
@@ -44,6 +47,7 @@ class EventController extends Controller
             'end_at' => 'required|date|date_format:Y-m-d|after_or_equal:start_at',
         ]);
         if($event = Event::create($request->all())) {
+            Notification::send(Auth::user(), new EventNotification($request->all()));
             Session::flash('success', 'Event has been successfully created.');
         }else{
             Session::flash('error', 'Event could not be created.');

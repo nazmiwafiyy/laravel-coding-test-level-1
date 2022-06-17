@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Web\EventController;
+use App\Http\Controllers\Web\ExternalApiController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,17 +15,18 @@ use App\Http\Controllers\Web\EventController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
+Route::get('/', [EventController::class, 'index'])->name('event.index');
+Route::get('/external-api', [ExternalApiController::class, 'index'])->name('external-api');
 
 Route::group(['prefix' => 'event'], function() {
     Route::get('/', [EventController::class, 'index'])->name('event.index');
-    Route::get('/create', [EventController::class, 'create'])->name('event.create');
-    Route::post('/', [EventController::class, 'store'])->name('event.store');
+    Route::get('/create', [EventController::class, 'create'])->name('event.create')->middleware('auth');;
+    Route::post('/', [EventController::class, 'store'])->name('event.store')->middleware('auth');;
     Route::get('/{event}', [EventController::class, 'show'])->name('event.show');
-    Route::get('/{event}/edit', [EventController::class, 'edit'])->name('event.edit');
-    Route::put('/{event}', [EventController::class, 'update'])->name('event.update');
-    Route::delete('/{event}', [EventController::class, 'destroy'])->name('event.destroy');
+    Route::get('/{event}/edit', [EventController::class, 'edit'])->name('event.edit')->middleware('auth');
+    Route::put('/{event}', [EventController::class, 'update'])->name('event.update')->middleware('auth');
+    Route::delete('/{event}', [EventController::class, 'destroy'])->name('event.destroy')->middleware('auth');
 });
+
+Auth::routes();
+

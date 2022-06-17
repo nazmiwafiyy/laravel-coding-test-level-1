@@ -1,4 +1,4 @@
-@extends('layouts.main')
+@extends('layouts.app')
 @section('content')
 
     <div class="row pt-4">
@@ -9,7 +9,7 @@
                     @include('event._form')
                     <div class="clearfix">
                         <div class="float-right">
-                            {!! Form::button('<i class="fa fa-check"></i> Save', ['type' => 'submit', 'class' => 'btn btn-primary btn-sm','id'=>'save-button'] )  !!}
+                            {!! Form::button('<i class="fa fa-check"></i> Save', ['type' => 'submit', 'class' => 'btn btn-primary btn-sm mt-2','id'=>'save-button'] )  !!}
                         </div>
                     </div>
                    
