@@ -26,9 +26,9 @@ class UpdateEventRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'max:255',
-            'start_at' => 'date_format:Y-m-d H:i:s',
-            'end_at' => 'date_format:Y-m-d H:i:s',
+            'name' => 'bail|required|max:255',
+            'start_at' => 'required|date|date_format:Y-m-d',
+            'end_at' => 'required|date|date_format:Y-m-d|after_or_equal:start_at',
         ];
     }
 
